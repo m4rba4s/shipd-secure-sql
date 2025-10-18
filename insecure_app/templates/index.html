@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>
+    This mini Flask application is purpose-built to demonstrate two classic SQL injection
+    vulnerabilities. Explore the pages below to see how unsanitised input can break security.
+</p>
+<ul>
+    <li><strong>Login Demo:</strong> Shows how an attacker can bypass authentication using the OR trick.</li>
+    <li><strong>Search Demo:</strong> Highlights a UNION SELECT attack that reveals data from another table.</li>
+</ul>
+<p>
+    Each page displays the raw SQL generated for your request so you can trace exactly how the attack works.
+    In real systems you must always use parameterised queries or an ORM to avoid these issues.
+</p>
+{% endblock %}

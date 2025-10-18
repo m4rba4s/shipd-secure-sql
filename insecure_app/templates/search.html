@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Vulnerable Article Search</h2>
+<p>
+    Search for article titles. Then try a payload like
+    <code>' UNION SELECT username, password FROM users --</code>
+    to leak data from the <code>users</code> table.
+</p>
+<form method="get">
+    <label>
+        Search term
+        <input type="text" name="q" value="{{ term }}" placeholder="Flask">
+    </label>
+    <button type="submit">Search</button>
+</form>
+
+{% if term and not results %}
+<p>No results found for <strong>{{ term }}</strong>.</p>
+{% endif %}
+
+{% if results %}
+<section class="results">
+    <h3>Results</h3>
+    {% for row in results %}
+    <article>
+        <h4>{{ row["title"] }}</h4>
+        <p>{{ row["body"] }}</p>
+    </article>
+    {% endfor %}
+    <p>
+        Notice how UNION SELECT lets the attacker control both the heading and body fields.
+    </p>
+</section>
+{% endif %}
+{% endblock %}

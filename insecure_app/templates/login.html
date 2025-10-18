@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Vulnerable Login Form</h2>
+<p>
+    Try logging in as <code>admin</code> with password <code>supersecret</code> the intended way,
+    then experiment with payloads such as <code>' OR '1'='1</code> to bypass authentication.
+</p>
+<form method="post">
+    <label>
+        Username
+        <input type="text" name="username" placeholder="admin">
+    </label>
+    <label>
+        Password
+        <input type="password" name="password" placeholder="supersecret">
+    </label>
+    <button type="submit">Login</button>
+</form>
+
+{% if message %}
+<p>{{ message }}</p>
+{% endif %}
+
+{% if user %}
+<p>
+    You are now logged in as <strong>{{ user["username"] }}</strong>. Explore the code to see why this worked.
+</p>
+{% endif %}
+{% endblock %}
