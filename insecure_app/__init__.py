@@ -7,6 +7,7 @@ from .routes import bp as pages_blueprint
 
 
 def create_app(test_config=None):
+    """Create Flask app."""
     app = Flask(__name__)
 
     app.config.from_mapping(
@@ -19,6 +20,7 @@ def create_app(test_config=None):
 
     @app.before_request
     def initialize_query_log():
+        """Reset per-request SQL log."""
         g.sql_queries = []
 
     app.teardown_appcontext(database.close_connection)
