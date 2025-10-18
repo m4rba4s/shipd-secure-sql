@@ -1,4 +1,3 @@
-"""Test harness for SQL injection regression checks."""
 
 import re
 import urllib.parse
@@ -7,7 +6,6 @@ from insecure_app import create_app
 
 
 def extract_queries(html: str):
-    """Return logged queries from HTML."""
     candidates = re.findall(r"<code>(.*?)</code>", html, flags=re.DOTALL)
     return [item for item in candidates if "params=" in item]
 
@@ -23,7 +21,6 @@ def _union_payload():
 
 
 def demonstrate_login_bypass(client):
-    """Attempt login bypass."""
     payload = {"username": "ghost", "password": _or_payload()}
     response = client.post("/login", data=payload, follow_redirects=True)
     html = response.get_data(as_text=True)
@@ -33,7 +30,6 @@ def demonstrate_login_bypass(client):
 
 
 def demonstrate_login_success(client):
-    """Attempt valid login."""
     payload = {"username": "admin", "password": "supersecret"}
     response = client.post("/login", data=payload, follow_redirects=True)
     html = response.get_data(as_text=True)
@@ -43,7 +39,6 @@ def demonstrate_login_success(client):
 
 
 def demonstrate_union_leak(client):
-    """Attempt UNION exfiltration."""
     encoded = urllib.parse.quote(_union_payload(), safe="")
     response = client.get(f"/search?q={encoded}")
     html = response.get_data(as_text=True)
@@ -53,7 +48,6 @@ def demonstrate_union_leak(client):
 
 
 def demonstrate_search_success(client):
-    """Attempt normal search."""
     response = client.get("/search?q=Flask")
     html = response.get_data(as_text=True)
     queries = extract_queries(html)

@@ -7,13 +7,11 @@ bp = Blueprint("pages", __name__)
 
 @bp.route("/")
 def index():
-    """Render home page."""
     return render_template("index.html", sql_queries=database.get_query_log())
 
 
 @bp.route("/login", methods=("GET", "POST"))
 def login():
-    """Render login demo."""
     message = None
     user = None
 
@@ -42,7 +40,6 @@ def login():
 
 @bp.route("/search")
 def search():
-    """Render search demo."""
     term = request.args.get("q", "")
     results = []
 
