@@ -55,7 +55,7 @@ def search():
     if term:
         raw_sql = (
             "SELECT title, body FROM articles "
-            f"WHERE title LIKE '%{term}%'
+            f"WHERE title LIKE '%{term}%'"
         )
         results = database.unsafe_fetch_all(raw_sql)
 
